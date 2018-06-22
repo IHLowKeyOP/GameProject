@@ -1,0 +1,55 @@
+// A $( document ).ready() block.
+$( document ).ready(function() {
+  console.log( "dom.js ready for action." );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});//END DOCUMENT READY
