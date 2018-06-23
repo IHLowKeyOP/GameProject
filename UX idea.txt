@@ -1,0 +1,8 @@
+Screen Load, Title of game, image, start button.
+
+Click the start button;
+
+-Choose a ship! P1 will choose Ship. P1 will name ship. 
+-P2 will choose ship and name ship.
+
+Then canvas will occur.
