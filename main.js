@@ -17,9 +17,12 @@ $( document ).ready(function() {
  
 
   //IN THE SHIP RECEIVEDAMAGE METHOD, INCLUDE THIS METHOD FOR THE GAME TO CHECK WHO RECEIVED DAMAGE.
+  //this needs testing
+
+  this
   Game.prototype.declareVictor = function(){
-    if (ship1.health ===0 && ship2.health !==0) {
-      alert(`${ship1.name} has lost, and ${ship2.name} is victorious!`);
+    if (this.ship1.health ===0 && this.ship2.health !==0) {
+      alert(`${this.ship1.name} has lost, and ${ship2.name} is victorious!`);
     } else if (ship2.health ===0 && ship1.health !==0){
       alert(`${ship2.name} has lost, and ${ship1.name} is victorious!`);
     } else {
