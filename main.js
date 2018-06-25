@@ -89,6 +89,9 @@ $( document ).ready(function() {
   document.getElementById('start-game-button').onclick = function () {
     console.log('Start Button Clicked!');
     theGame = new Game();
+    // Must discover how the canvas works
+    // theGameCanvas = new theGameCanvas(theGame.something);
+    // theGameCanvas.createBoard();
   }
   
 

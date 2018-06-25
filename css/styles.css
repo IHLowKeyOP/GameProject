@@ -1,0 +1,12 @@
+body {
+  background-image: url("./assets/img/spacebattle.jpg")
+}
+
+h1 {
+  color: whitesmoke;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+}
