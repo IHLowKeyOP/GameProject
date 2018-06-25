@@ -6,3 +6,6 @@ Click the start button;
 -P2 will choose ship and name ship.
 
 Then canvas will occur.
+
+
+Ships spawn top right, bottom left.
