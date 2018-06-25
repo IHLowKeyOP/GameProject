@@ -7,7 +7,8 @@ function GameCanvas(arg1) {
 
 GameCanvas.prototype.createBoard = function () {
   $("canvas").css("background.color: white;")
-  this.ctx.fillStyle = "#FFF";
+  // this.ctx.clearRect(0, 0 , 1000, 700);
+  this.ctx.fillStyle = '#FFF'
   this.ctx.fillRect(0,0,1000,700)
 };
 

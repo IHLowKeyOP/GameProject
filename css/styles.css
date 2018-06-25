@@ -16,4 +16,18 @@ h1 {
 .flexlife {
   display: flex;
   justify-content: center;
+  align-items: center;
+  
 }
+
+
+
+.selection{
+  width: 600px;
+  text-align: center;
+  
+
+}
+/* #titleException{
+  justify-content : center;
+} */
