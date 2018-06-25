@@ -90,8 +90,8 @@ $( document ).ready(function() {
     console.log('Start Button Clicked!');
     theGame = new Game();
     // Must discover how the canvas works
-    // theGameCanvas = new theGameCanvas(theGame.something);
-    // theGameCanvas.createBoard();
+    theGameCanvas = new GameCanvas();
+    theGameCanvas.createBoard();
   }
   
 
@@ -247,4 +247,3 @@ shoot: .......
 
 
 
-*/

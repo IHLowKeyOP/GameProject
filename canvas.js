@@ -1,13 +1,15 @@
 
 // For Canvas, need to discover how canvas links to document
-// function theGameCanvas(secretWord) {
-//   this.ctx = document.getElementById('something').getContext('2d');
-// }
+function GameCanvas(arg1) {
+  this.ctx = document.getElementById('theCanvas').getContext('2d');
+}
 
 
-// theGameCanvas.prototype.createBoard = function () {
-//   this.ctx.clearRect(0,0,1200,800);
-// };
+GameCanvas.prototype.createBoard = function () {
+  $("canvas").css("background.color: white;")
+  this.ctx.fillStyle = "#FFF";
+  this.ctx.fillRect(0,0,1000,700)
+};
 
 
 
