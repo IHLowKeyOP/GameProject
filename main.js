@@ -1,4 +1,5 @@
 // hello
+// weird comment 
 
 var theGame;
 var theImage;
