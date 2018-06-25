@@ -82,11 +82,11 @@ var palyer2 = [];
 // This is the balanced ship with balanced stats
 
 function Ship(spd, health, atk,name){
-  // this.x = 475;
-  // this.y = 590;
-  // this.width = 50;
-  // this.height = 85;
-  // this.img = 'img/newShip.PNG';   
+  this.x = 475;
+  this.y = 590;
+  this.width = 50;
+  this.height = 85;
+  this.img = 'img/newShip.PNG';   
   this.spd = spd;
   this.health = health;
   this.atk = atk;
@@ -108,14 +108,14 @@ Ship.prototype.drawShip = function(){
 
 
 
-// PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 
-function Player1(spd, health, atk,){
+// // PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 
+// function Player1(spd, health, atk,){
 
   
-}
-Player1.prototype = Object.create(Ship.prototype);
-Player1.prototype.constructor = Player1
-Player1.prototype.spawn = 
+// }
+// Player1.prototype = Object.create(Ship.prototype);
+// Player1.prototype.constructor = Player1
+// Player1.prototype.spawn = 
 
 
 
