@@ -118,50 +118,51 @@ $( document ).ready(function() {
 
 
 
-/* THE WORKSHOP: GIANNINI'S CODE IN PROGRESS WILL GO HERE
+/* THE WORKSHOP: GIANNINI'S CODE IN PROGRESS WILL GO HERE */
 
 
 
 
 
 
-// var spd = 10;
-// var health= 300;
-// var atk = 400;
 
-// //this ship is the balanced stat ship
-// function Ship(typ3,spd, health, atk,name){
-//   this.spd = spd;
-//   this.health = health;
-//   this.atk = atk;
-//   this.name = prompt('What is the name of your ship');
-//   this.typ3 = "red";
+var spd = 10;
+var health= 300;
+var atk = 400;
 
-// }
+//this ship is the balanced stat ship
+function Ship(typ3,spd, health, atk,name){
+  this.spd = spd;
+  this.health = health;
+  this.atk = atk;
+  this.name = prompt('What will your ship be named?');
+  this.typ3 = "Banshee";
 
-// function glassCannon(){
-//   spd = 25;
-//   health = 50;
-//   atk = 300;
-// }
+}
 
-// // onclick insert ship type in to new ship function to give values 
-//  function glassCannon(typ3,spd, health, atk,name){
-//       Ship.call(this, spd, health, atk, this)
+function glassCannon(){
+  spd = 25;
+  health = 50;
+  atk = 300;
+}
 
-//       this.spd = 100;
-//       this.health = 1 ;
-//       this.atk = 59900;
+// onclick insert ship type in to new ship function to give values 
+ function glassCannon(typ3,spd, health, atk,name){
+      Ship.call(this, spd, health, atk, this)
+
+      this.spd = 10;
+      this.health = 25;
+      this.atk = 200;
       
-//   }e
+  }
 
-// shipG1 = new glassCannon();
+shipG1 = new glassCannon();
 
 
-// glassCannon.prototype = Object.create(Ship.prototype);
-// glassCannon.prototype.constructor = glassCannon;
+glassCannon.prototype = Object.create(Ship.prototype);
+glassCannon.prototype.constructor = glassCannon;
 
-// console.log(shipG1)
+console.log(shipG1)
 
 
 // // ship.prototype.atk = function(amountOfDamage){
@@ -171,6 +172,32 @@ $( document ).ready(function() {
 // // ship.prototype.receiveDamage= function(amountOfDamage){
 // //     this.health -= damage;
 // // }
+
+
+
+
+
+
+
+
+
+// // ship.prototype.atk = function(amountOfDamage){
+// //     return this.atk;
+// // }
+
+// // ship.prototype.receiveDamage= function(amountOfDamage){
+// //     this.health -= damage;
+// // }
+
+
+
+// ship.prototype.atk = function(amountOfDamage){
+//     return this.atk;
+// }
+
+// ship.prototype.receiveDamage= function(amountOfDamage){
+//     this.health -= damage;
+// }
 
 
 
@@ -195,42 +222,37 @@ $( document ).ready(function() {
  
 
 
-motion controls:
+// motion controls:
 
 
-Player 1 Motion controls:
+// Player 1 Motion controls:
 
 
-Left: q
-Right:z
-Forward:s
-Back:a
-Rotate counterclockwise:w
-rotate clockwise:x
-shooting: leftcapslock
-=======
-//DOM FUNCTIONS 
-document.getElementById('startGameButton').onclick = function(){
-  theGame = new Game();
+// Left: q
+// Right:z
+// Forward:s
+// Back:a
+// Rotate counterclockwise:w
+// rotate clockwise:x
+// shooting: leftcapslock
+// =======
+// //DOM FUNCTIONS 
+// document.getElementById('startGameButton').onclick = function(){
+//   theGame = new Game();
   
-  console.log('you clicked the button')
-}
+//   console.log('you clicked the button')
+// }
 
 
-Player 2 Motion controls:
+// Player 2 Motion controls:
 
-Left:  left arrow 
-Right: right arrow
-Forward: forward arrow
-Back: back arrow
-Rotate counterclock: /
-rotate clockwise: right shift
-shoot: .......
-
-
-
-
-*/
+// Left:  left arrow 
+// Right: right arrow
+// Forward: forward arrow
+// Back: back arrow
+// Rotate counterclock: /
+// rotate clockwise: right shift
+// shoot: .......
 
 
 
@@ -247,4 +269,7 @@ shoot: .......
 
 
 
-*/
+
+
+
+
