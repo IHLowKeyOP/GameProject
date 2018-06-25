@@ -1,3 +1,5 @@
+// hello
+
 var theGame;
 var theImage;
 
