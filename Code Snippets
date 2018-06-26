@@ -2,6 +2,19 @@ Here is where we put code pieces that we are working on integrating;
 This will keep our main.js clean
 
 
+
+ {
+      event.preventDefault();
+      blah = setInterval(function() {
+        Player2.prototype.controls(event.key, 10);
+      }, 10);
+      }
+
+
+
+
+
+
 To change background, change CTX fillstyle
 
 
