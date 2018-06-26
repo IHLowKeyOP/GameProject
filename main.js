@@ -1,8 +1,11 @@
-// hello
-// weird comment
+//Global variables
 var blah;
 var theGame;
 var theImage;
+
+
+
+//Document Ready function for loading
 $(document).ready(function() {
   var ctx = document.getElementById("theCanvas").getContext("2d");
   console.log("main.js ready for action.");
@@ -14,9 +17,8 @@ $(document).ready(function() {
     // this.declareVictor HERE YOU WILL LINK METHOD for declaring the winner/loser. Reference hangman.
     //declareVictor text below.
   }
-  //IN THE SHIP RECEIVEDAMAGE METHOD, INCLUDE THIS METHOD FOR THE GAME TO CHECK WHO RECEIVED DAMAGE.
-  //this needs testing
-  // this;
+
+  //Declare Victor Method. Activate via receive damage method to trigger when someone's health = 0;
   Game.prototype.declareVictor = function() {
     if (this.ship1.health === 0 && this.ship2.health !== 0) {
       alert(
@@ -30,14 +32,9 @@ $(document).ready(function() {
       alert(`Two ace pilots have eliminated each other in deep dark space.`);
     }
   };
-  /* THE WORKSHOP: GIANNINI'S CODE IN PROGRESS WILL GO HERE */
-  var spd = 10;
-  var health = 300;
-  var atk = 400;
-  var player1 = [];
-  var palyer2 = [];
-  //this ship is the balanced stat ship constructor
-  // This is the balanced ship with balanced stats
+
+
+// Player 1
   function Player1(spd, health, atk, name) {
     this.x = 475;
     this.y = 590;
@@ -50,6 +47,7 @@ $(document).ready(function() {
     // this.name = prompt("Player 1, what will your ship be named?");
     console.log(this);
   }
+
   Player1.prototype.drawShip = function() {
     var that = this;
     theImage = new Image();
@@ -58,7 +56,9 @@ $(document).ready(function() {
       ctx.drawImage(theImage, that.x, that.y, that.width, that.height);
     };
   };
-  //MAIN CONSTRUCTOR FUNTIOO FOR SECIND PLAYER
+  
+  
+  // Player2
   function Player2(spd, health, atk, name) {
     this.x = 800;
     this.y = 100;
@@ -71,7 +71,8 @@ $(document).ready(function() {
     // this.name = prompt("Player 2, what will your ship be named?");
     console.log(this);
   }
-  //DRAW FUNTION FOR SECOND PLAYER
+
+
   Player2.prototype.drawShip = function() {
     var that = this;
     theImage = new Image();
@@ -80,9 +81,11 @@ $(document).ready(function() {
       ctx.drawImage(theImage, that.x, that.y, that.width, that.height);
     };
   };
+
+
+  //Start Player 2 Motion Controls
   document.onkeydown = function(event) {
     ctx.clearRect(theP2.x, theP2.y, theP2.width, theP2.height);
-    //  theGame.ship.motion(e.code))
     if (event.key === "ArrowLeft") {
       theP2.x -= theP2.spd;
       console.log(theP2);
@@ -93,14 +96,17 @@ $(document).ready(function() {
       theP2.y -= theP2.spd;
       console.log("up");
     } else if (event.key === "ArrowDown") {
-      theP1.y += theP2.spd;
+      theP2.y += theP2.spd;
       console.log("down");
     }
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(0,0,1000,700);
+
     ctx.drawImage(theImage, theP2.x, theP2.y, theP2.width, theP2.height);
     {
       event.preventDefault();
       blah = setInterval(function() {
-        Player2.prototype.controls(event.key, 10);
+        Player2.prototype.controls(event.key, 1);
       }, 10);
     }
   };
@@ -131,113 +137,15 @@ $(document).ready(function() {
       }
     }
   };
-  // ---------------------((()))
-  // // // PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1
-  // function Player1(spd, health, atk,){
-  // }
-  // Player1.prototype = Object.create(Ship.prototype);
-  // Player1.prototype.constructor = Player1
-  // // Player1.prototype.spawn =
-  // Car.prototype.move = function(whichKey, speed){
-  //   ctx.clearRect(this.x, this.y, this.width, this.height);
-  //     case 'ArrowLeft':
-  //     if(this.canMove(this.x - speed, this.y)){
-  //       this.x -=speed;
-  //     }
-  //     break;
-  //     case 'ArrowRight':
-  //     if(this.canMove(this.x + speed, this.y)){
-  //       this.x +=speed;
-  //     }
-  //     break;
-  //     case 'ArrowUp':
-  //     if(this.canMove(this.x, this.y -speed)){
-  //       this.y -= speed;
-  //     }
-  //     break;
-  //     case 'ArrowDown':
-  //     if(this.canMove(this.x, this.y + speed)){
-  //       this.y +=speed;
-  //     }
-  //   }
-  //   ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
-  // }
-  // Car.prototype.canMove = function(futurex, futurey){
-  //   if(
-  //     futurex + this.width >= currentGame.obstacle.x &&
-  //      futurex <= currentGame.obstacle.x + currentGame.obstacle.width &&
-  //      futurey + this.height >= currentGame.obstacle.y &&
-  //      futurey <= currentGame.obstacle.y + currentGame.obstacle.height
-  //     ){
-  //       return false
-  //     } else if(
-  //       futurex + this.width >= 500 ||
-  //       futurex <= 0 ||
-  //       futurey + this.height >= 700 ||
-  //       futurey <= 0
-  //     ){
-  //       return false
-  //     }
-  //     return true;
-  // }
-  // function glassCannon(){
-  //   spd = 25;
-  //   health = 50;
-  //   atk = 300;
-  // }
-  // // onclick insert ship type in to new ship function to give values
-  // function glassCannon(typ3,spd, health, atk,name){
-  //   Ship.call(spd, health, atk, this)
-  //   this.spd = 10;
-  //   this.health = 25;
-  //   this.atk = 200;
-  // }
-  // shipG1 = new glassCannon();
-  //   switch(whichKey){
-  // glassCannon.prototype = Object.create(Ship.prototype);
-  // glassCannon.prototype.constructor = glassCannon;
-  // // ship.prototype.atk = function(amountOfDamage){
-  // //     return this.atk;
-  // // }
-  // // ship.prototype.receiveDamage= function(amountOfDamage){
-  // //     this.health -= damage;
-  // // }
-  // // ship.prototype.atk = function(amountOfDamage){
-  // //     return this.atk;
-  // // }
-  // // ship.prototype.receiveDamage= function(amountOfDamage){
-  // //     this.health -= damage;
-  // // }
-  // ship.prototype.atk = function(amountOfDamage){
-  //     return this.atk;
-  // }
-  // ship.prototype.receiveDamage= function(amountOfDamage){
-  //     this.health -= damage;
-  // }
-  //MOTION CONTROLS METHOD SET UP FOR SHIP
-  // motion controls:
-  // Player 1 Motion controls:
-  // Left: q
-  // Right:z
-  // Forward:s
-  // Back:a
-  // Rotate counterclockwise:w
-  // rotate clockwise:x
-  // shooting: leftcapslock
-  // =======
-  // //DOM FUNCTIONS
-  // document.getElementById('startGameButton').onclick = function(){
-  //   theGame = new Game();
-  //   console.log('you clicked the button')
-  // }
-  // Player 2 Motion controls:
-  // Left:  left arrow
-  // Right: right arrow
-  // Forward: forward arrow
-  // Back: back arrow
-  // Rotate counterclock: /
-  // rotate clockwise: right shift
-  // shoot: .......
+  // End Player 2 motion controls
+
+
+
+
+
+
+
+
   // DOM FUNCTIONS SHOULD STAY AT THE BOTTOM
   document.getElementById("start-game-button").onclick = function() {
     console.log("Start Button Clicked!");
@@ -250,11 +158,8 @@ $(document).ready(function() {
     theP1.drawShip();
     theP2.drawShip();
   };
-  //Rewrite this code for the motion controls method on the ship.
-  document.onkeyup = function() {
-    clearInterval(blah);
-  };
-  console.log("no scrolling should occur here");
+  
+
   Player2.prototype.controls();
 }); //END DOCUMENT READY FUNCTION
 
