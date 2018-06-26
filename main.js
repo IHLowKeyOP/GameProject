@@ -2,6 +2,7 @@
 
 //Global variables
 var blah;
+var blah2;
 var theGame;
 var theImage;
 
@@ -86,6 +87,7 @@ var theImage;
         this.y +=speed;
         console.log(this);
       }
+      break;
     }
     ctx.fillStyle = '#FFF'
     ctx.fillRect(0,0,1000,700)
@@ -95,6 +97,9 @@ var theImage;
 
 
 
+  //CAN MOVE: This will set up so that if this touches any obstacle/weapon, something triggered;
+  //If a powerup, set a prototype to change stats.
+  //If an asteroid/powerdown/bullet/enemy ship, trigger a prototype to receive damage/lose stats.
   Player2.prototype.canMove = function(futurex, futurey){
     if(
         futurex + this.width >= 1000 ||
@@ -107,12 +112,14 @@ var theImage;
       return true;
   
   }
-  
-
-
-
-
 //End Player 2 motion controls
+
+
+
+Player2.prototype.pewPew = function () {
+  console.log('pewpew!')
+}
+
 
 
 
@@ -132,17 +139,26 @@ var theImage;
 
   document.onkeydown = function(event) {
     clearInterval(blah);
+    clearInterval(blah2);
     if (event.key === 'ArrowLeft'|| event.key ==='ArrowRight'|| event.key ==='ArrowUp'|| event.key ==='ArrowDown'){
       event.preventDefault();
 
        blah = setInterval(function(){
-        theP2.move(event.key, 2);
-      }, 10);
+        theP2.move(event.key, 8);
+      }, 0);
+      
+      
+    } if (event.key === '.') {
+      blah2 = setInterval(function(){
+        theP2.pewPew();
+      },10);
     }
+    
   }
 
   document.onkeyup = function(){
     clearInterval(blah);
+    clearInterval(blah2)
   }
   
 
