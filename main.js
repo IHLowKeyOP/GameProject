@@ -81,7 +81,7 @@ var palyer2 = [];
 //this ship is the balanced stat ship constructor
 // This is the balanced ship with balanced stats
 
-function Ship(spd, health, atk,name){
+function Player1(spd, health, atk,name){
   this.x = 475;
   this.y = 590;
   this.width = 50;
@@ -90,12 +90,12 @@ function Ship(spd, health, atk,name){
   this.spd = spd;
   this.health = health;
   this.atk = atk;
-  this.name = prompt('What will your ship be named?');
+  this.name = prompt('Player 1, what will your ship be named?');
   console.log(this);  
 }
 
 
-Ship.prototype.drawShip = function(){
+Player1.prototype.drawShip = function(){
   var that = this;
   theImage = new Image();
   theImage.src = that.img;
@@ -107,15 +107,77 @@ Ship.prototype.drawShip = function(){
 
 
 
+function Player2(spd, health, atk,name){
+  this.x = 800;
+  this.y = 100;
+  this.width = 50;
+  this.height = 85;
+  this.img = 'img/newShip.PNG';   
+  this.spd = spd;
+  this.health = health;
+  this.atk = atk;
+  this.name = prompt('Player 2, what will your ship be named?');
+  console.log(this);  
+}
 
-// // PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 
+
+Player2.prototype.drawShip = function(){
+  var that = this;
+  theImage = new Image();
+  theImage.src = that.img;
+  
+  theImage.onload = function(){
+    ctx.drawImage(theImage, that.x, that.y, that.width, that.height)
+  }
+}
+
+Player2.prototype.controls = function(whichCode, speed){
+    ctx.clearRect(this.x, this.y, this.width, this.height);
+    switch(whichCode){
+      case 'ArrowLeft':{
+          this.x -=speed;
+        }
+        break;
+        case 'ArrowRight': 
+        {
+            this.x +=speed;
+          }
+          break;
+          case 'ArrowUp':
+          {
+              this.y -= speed;
+            }
+            break;
+            case 'ArrowDown': 
+           {
+                this.y +=speed;
+              }
+            
+            ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
+          }
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+// // // PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 PLAYER 1 
 // function Player1(spd, health, atk,){
 
   
 // }
 // Player1.prototype = Object.create(Ship.prototype);
 // Player1.prototype.constructor = Player1
-// Player1.prototype.spawn = 
+// // Player1.prototype.spawn = 
 
 
 
@@ -221,30 +283,30 @@ Ship.prototype.drawShip = function(){
                     
                     
                     
-function glassCannon(){
-  spd = 25;
-  health = 50;
-  atk = 300;
+// function glassCannon(){
+//   spd = 25;
+//   health = 50;
+//   atk = 300;
   
-}
+// }
 
-// onclick insert ship type in to new ship function to give values 
-function glassCannon(typ3,spd, health, atk,name){
-  Ship.call(spd, health, atk, this)
+// // onclick insert ship type in to new ship function to give values 
+// function glassCannon(typ3,spd, health, atk,name){
+//   Ship.call(spd, health, atk, this)
   
-  this.spd = 10;
-  this.health = 25;
-  this.atk = 200;
+//   this.spd = 10;
+//   this.health = 25;
+//   this.atk = 200;
   
-}
+// }
 
-shipG1 = new glassCannon();
+// shipG1 = new glassCannon();
                     
                     
                   
                   //   switch(whichKey){
-glassCannon.prototype = Object.create(Ship.prototype);
-glassCannon.prototype.constructor = glassCannon;
+// glassCannon.prototype = Object.create(Ship.prototype);
+// glassCannon.prototype.constructor = glassCannon;
 
 
 
@@ -346,9 +408,11 @@ document.getElementById('start-game-button').onclick = function () {
   // Must discover how the canvas works
   theGameCanvas = new GameCanvas();
   theGameCanvas.createBoard();
-  theShip = new Ship(); 
-  theGame.ship1 = theShip;
-  theGame.ship1.drawShip(); 
+  theP1 = new Player1(); 
+  theP2 = new Player2();
+  
+  theP1.drawShip(); 
+  theP2.drawShip();
 }
 
 
@@ -361,6 +425,7 @@ if (event.code === 'ArrowLeft'|| event.code ==='ArrowRight'|| event.code ==='Arr
 || event.code === 'CapsLock'||event.code === 'ShiftRight'){
   event.preventDefault();
   console.log('no scrolling should occur here');
+  Player2.prototype.controls();
   }
 }
 
