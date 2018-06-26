@@ -1,6 +1,6 @@
 // hello
 // weird comment 
-
+var blah;
 var theGame;
 var theImage;
 
@@ -419,15 +419,30 @@ document.getElementById('start-game-button').onclick = function () {
 
 
 //Rewrite this code for the motion controls method on the ship.
-document.onkeydown = function (e) {
+document.onkeydown = function (event) {
 //  theGame.ship.motion(e.code))
-if (event.code === 'ArrowLeft'|| event.code ==='ArrowRight'|| event.code ==='ArrowUp'|| event.code ==='ArrowDown'
-|| event.code === 'CapsLock'||event.code === 'ShiftRight'){
+if (event.key === 'ArrowLeft'|| event.key ==='ArrowRight'|| event.key ==='ArrowUp'|| event.key ==='ArrowDown'
+|| event.key === 'CapsLock'||event.key === 'ShiftRight'){
   event.preventDefault();
+  blah = setInterval(function(){
+    Player2.prototype.controls(event.key, 10);
+  }, 10);
+}
+}
+
+document.onkeyup = function(){
+clearInterval(blah);
+}
+
   console.log('no scrolling should occur here');
   Player2.prototype.controls();
-  }
-}
+
+  
+
+
+
+
+
 
 
 
