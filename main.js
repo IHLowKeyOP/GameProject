@@ -7,6 +7,7 @@ let canvas = canvasElement.get(0).getContext("2d");
 canvasElement.appendTo('#game-board');
 let FPS = 60;
 let theP2 = new Player2();
+
 // Rate of fire
 setInterval(function() {
   if(keydown.space) {
@@ -14,6 +15,11 @@ setInterval(function() {
     
   }
 }, 200);
+
+let theP1 = new Player1();
+let alertCount = 0;
+
+
 
 // GameLoop
 setInterval(function() {
@@ -55,21 +61,49 @@ theP2.bullets = theP2.bullets.filter(function(bullet) {
 });
 
 
-}
 
-//Motion Detection
-Player2.prototype.canMove = function(futurex, futurey){
-  if(
-      futurex + this.width >= CANVAS_WIDTH ||
-      futurex <= 0 ||
-      futurey + this.height >= CANVAS_HEIGHT ||
-      futurey <= 0
-    ){
-      return false
-    }
-    return true;
+bulletCollisions();
 
 }
+
+//Collision Detection
+
+function collides(a, b) {
+  return a.x < b.x + b.width &&
+         a.x + a.width > b.x &&
+         a.y < b.y + b.height &&
+         a.y + a.height > b.y;
+}
+
+function bulletCollisions() {
+  theP2.bullets.forEach(function(bullet) {
+      if (collides(bullet, theP1)) {
+        theP1.receiveDamage();
+        bullet.active = false;
+      }
+  ;
+  });
+}
+
+
+
+  playerCollisions = function(futurex, futurey){
+    if(
+      futurex + this.width >= theP1.x &&
+       futurex <= theP1.x + theP1.width &&
+       futurey + this.height >= theP1.y &&
+       futurey <= theP1.y + theP1.height
+      ){
+        return false
+  }
+      return true
+}
+ 
+ 
+
+
+
+
 
 //Shooting Logic
 Player2.prototype.shoot = function () {
@@ -138,6 +172,7 @@ function draw() {
   theP2.bullets.forEach(function(bullet) {
     bullet.draw();
   });
+  theP1.drawShip();
 }
 
 
@@ -149,7 +184,7 @@ function Player2(spd, health, atk, name) {
   this.height = 85;
   this.img = "./img/newShip.PNG";
   this.spd = 10;
-  this.health = 100;
+  this.health = 1000;
   this.atk = 10;
   // this.name = prompt("Player 2, what will your ship be named?");
   this.bullets = [];
@@ -168,3 +203,76 @@ Player2.prototype.drawShip = function() {
     canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
 
 };
+
+
+
+//Player1
+
+
+function Player1(spd, health, atk, name) {
+  this.x = 500;
+  this.y = 100;
+  this.width = 50;
+  this.height = 85;
+  this.img = "./img/newShip.PNG";
+  this.spd = 10;
+  this.health = 1000;
+  this.atk = 10;
+  // this.name = prompt("Player 2, what will your ship be named?");
+  this.bullets = [];
+  this.midpoint = function() {
+    return {
+      x: this.x + this.width/2,
+      y: this.y + this.height/2
+    };
+  };
+}
+
+Player1.prototype.drawShip = function() {
+  var that = this;
+  theImage = new Image();
+  theImage.src = that.img;
+    canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+
+};
+
+
+Player1.prototype.receiveDamage = function() {
+  this.health -= theP2.atk
+  console.log(this.health);
+  if (this.health <=1) {
+    declareVictor();
+  }
+  
+}
+
+
+declareVictor = function() {
+  if ((theP2.health <= 1 && theP1.health > 0) && alertCount ===0) {
+    alert(
+      `${theP2.name} has lost, and ${theP1.name} is victorious!`
+    );
+    alertCount ++
+  } else if ((theP1.health <= 0 && theP2.health > 0) && alertCount ===0) {
+    alert(
+      `${theP1.name} has lost, and ${theP2.name} is victorious!`
+    );
+    alertCount ++;
+  } else if ((theP1.health <= 0 && theP2.health <= 0) && (alertCount === 0)) {
+    alert(`Two ace pilots have eliminated each other in deep dark space.`);
+    alertCount++;
+  } else {
+    console.log('OVERKILL');
+  }
+};
+
+
+// var something = (function() {
+//   var executed = false;
+//   return function() {
+//       if (!executed) {
+//           executed = true;
+//           // do something
+//       }
+//   };
+// })();
