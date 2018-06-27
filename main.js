@@ -7,12 +7,23 @@ let canvas = canvasElement.get(0).getContext("2d");
 canvasElement.appendTo('#game-board');
 let FPS = 60;
 let theP2 = new Player2();
+
+// Rate of fire
+setInterval(function() {
+  if(keydown.space) {
+    theP2.shoot();
+    
+  }
+}, 200);
+
 let theP1 = new Player1();
 let alertCount = 0;
 
 
+
 // GameLoop
 setInterval(function() {
+
   update();
   draw();
 }, 1000/FPS);
@@ -21,9 +32,7 @@ setInterval(function() {
 //Game actions
 function update(){ 
   //P2 shoot
-  if(keydown.space) {
-    theP2.shoot();
-  }
+  
 
 
 
@@ -38,7 +47,7 @@ function update(){
 if(keydown.up && theP2.y > 0) {
   theP2.y -= theP2.spd;
 }
-if (keydown.down && (theP2.y + theP2.height + 25  ) < CANVAS_HEIGHT) {
+if (keydown.down && theP2.y + theP2.height + 25 < CANVAS_HEIGHT) {
   theP2.y += theP2.spd;
 }
 
@@ -101,14 +110,17 @@ Player2.prototype.shoot = function () {
   var bulletPosition = theP2.midpoint();
 
   theP2.bullets.push(Bullet({
-    speed: 10,
+    speed: 15,
     x: bulletPosition.x,
     y: bulletPosition.y
   }));
   console.log('Pew Pew!')
 }
 
+
+
 //Bullet Logic 
+
 
 function Bullet(I) {
   I.active = true;
