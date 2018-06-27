@@ -1,165 +1,92 @@
 
 
-//Global variables
-var blah;
-var blah2;
-var theGame;
-var theImage;
+let CANVAS_WIDTH = 1000;
+let CANVAS_HEIGHT = 700;
+let canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas>");
+let canvas = canvasElement.get(0).getContext("2d");
+canvasElement.appendTo('#game-board');
+let FPS = 60;
+let textX = 50;
+let textY = 50;
+let theP2 = new Player2();
 
 
+setInterval(function() {
+  update();
+  draw();
+}, 1000/FPS);
 
-  var ctx = document.getElementById("theCanvas").getContext("2d");
-  console.log("main.js ready for action.");
-  function Game(ship1, ship2, obstacles, powerups) {
-    this.obstacles = [];
-    this.powerups = [];
-    // this.declareVictor HERE YOU WILL LINK METHOD for declaring the winner/loser. Reference hangman.
-    //declareVictor text below.
+
+function update(){ 
+
+  if(keydown.left) {
+    theP2.x -= 30;
+  }
+  if (keydown.right) {
+    theP2.x += 30;
   }
 
-  //Declare Victor Method. Activate via receive damage method to trigger when someone's health = 0;
-  Game.prototype.declareVictor = function() {
-    if (this.Player1.health === 0 && this.Player2.health !== 0) {
-      alert(
-        `${this.ship1.name} has lost, and ${this.ship2.name} is victorious!`
-      );
-    } else if (this.ship2.health === 0 && this.ship1.health !== 0) {
-      alert(
-        `${this.ship2.name} has lost, and ${this.ship1.name} is victorious!`
-      );
-    } else {
-      alert(`Two ace pilots have eliminated each other in deep dark space.`);
+
+if(keydown.up) {
+  theP2.y -= 30;
+}
+if (keydown.down) {
+  theP2.y += 30;
+}
+
+}
+
+Player2.prototype.canMove = function(futurex, futurey){
+  if(
+      futurex + this.width >= 1000 ||
+      futurex <= 0 ||
+      futurey + this.height >= 700 ||
+      futurey <= 0
+    ){
+      return false
     }
-  };
+    return true;
 
-  
-  // Player2
-  function Player2(spd, health, atk, name) {
-    this.x = 800;
-    this.y = 100;
-    this.width = 50;
-    this.height = 85;
-    this.img = "img/newShip.PNG";
-    this.spd = 25;
-    this.health = 100;
-    this.atk = 10;
-    // this.name = prompt("Player 2, what will your ship be named?");
-    console.log(this);
-  }
-
-
-  Player2.prototype.drawShip = function() {
-    var that = this;
-    theImage = new Image();
-    theImage.src = that.img;
-    theImage.onload = function() {
-      ctx.drawImage(theImage, that.x, that.y, that.width, that.height);
-    };
-  };
-
-
-  //Start Player 2 Motion Controls
-
-  Player2.prototype.move = function(whichKey, speed){
-    ctx.clearRect(this.x, this.y, this.width, this.height);
-  
-    switch(whichKey){
-      case 'ArrowLeft':
-      if(this.canMove(this.x - speed, this.y)){
-        this.x -=speed;
-        console.log(this);
-      }
-      break;
-      case 'ArrowRight': 
-      if(this.canMove(this.x + speed, this.y)){
-        this.x +=speed;
-        console.log(this);
-      }
-      break;
-      case 'ArrowUp':
-      if(this.canMove(this.x, this.y -speed)){
-        this.y -= speed;
-        console.log(this);
-      }
-      break;
-      case 'ArrowDown': 
-      if(this.canMove(this.x, this.y + speed)){
-        this.y +=speed;
-        console.log(this);
-      }
-      break;
-    }
-    ctx.fillStyle = '#FFF'
-    ctx.fillRect(0,0,1000,700)
-    ctx.drawImage(theImage, this.x, this.y, this.width, this.height);
-    
-  }
-
-
-
-  //CAN MOVE: This will set up so that if this touches any obstacle/weapon, something triggered;
-  //If a powerup, set a prototype to change stats.
-  //If an asteroid/powerdown/bullet/enemy ship, trigger a prototype to receive damage/lose stats.
-  Player2.prototype.canMove = function(futurex, futurey){
-    if(
-        futurex + this.width >= 1000 ||
-        futurex <= 0 ||
-        futurey + this.height >= 700 ||
-        futurey <= 0
-      ){
-        return false
-      }
-      return true;
-  
-  }
-//End Player 2 motion controls
-
-
-
-Player2.prototype.pewPew = function () {
-  console.log('pewpew!')
 }
 
 
 
 
-
-
-  // DOM FUNCTIONS SHOULD STAY AT THE BOTTOM
-  document.getElementById("start-game-button").onclick = function() {
-    console.log("Start Button Clicked!");
-    theGame = new Game();
-    theGameCanvas = new GameCanvas();
-    theGameCanvas.createBoard();
-    theP2 = new Player2();
-    theGame.Player2 = theP2;
-    theGame.Player2.drawShip();
-  };
-
-
-  document.onkeydown = function(event) {
-    clearInterval(blah);
-    clearInterval(blah2);
-    if (event.key === 'ArrowLeft'|| event.key ==='ArrowRight'|| event.key ==='ArrowUp'|| event.key ==='ArrowDown'){
-      event.preventDefault();
-
-       blah = setInterval(function(){
-        theP2.move(event.key, 8);
-      }, 0);
-      
-      
-    } if (event.key === '.') {
-      blah2 = setInterval(function(){
-        theP2.pewPew();
-      },10);
-    }
-    
-  }
-
-  document.onkeyup = function(){
-    clearInterval(blah);
-    clearInterval(blah2)
-  }
+document.onkeydown = function(event) {
   
+  if (event.key === 'ArrowLeft'|| event.key ==='ArrowRight'|| event.key ==='ArrowUp'|| event.key ==='ArrowDown'){
+    event.preventDefault();}}
+    
 
 
+
+
+function draw() {
+  canvas.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  canvas.fillStyle = "white";
+  canvas.fillRect(0, 0, 1000,700);
+  theP2.drawShip();
+}
+
+
+// Player2
+function Player2(spd, health, atk, name) {
+  this.x = 800;
+  this.y = 100;
+  this.width = 50;
+  this.height = 85;
+  this.img = "./img/newShip.PNG";
+  this.spd = 25;
+  this.health = 100;
+  this.atk = 10;
+  // this.name = prompt("Player 2, what will your ship be named?");
+  console.log(this);
+}
+
+Player2.prototype.drawShip = function() {
+  var that = this;
+  theImage = new Image();
+  theImage.src = that.img;
+    canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+
+};
