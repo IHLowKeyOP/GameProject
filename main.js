@@ -1,4 +1,9 @@
 //Notes: I need to figure out how to use hotkeys
+
+
+
+
+function Game() {
 //Global Variables
 let CANVAS_WIDTH =  window.innerWidth;
 let CANVAS_HEIGHT = window.innerHeight;
@@ -9,7 +14,8 @@ let FPS = 60;
 let theP2 = new Player2();
 let theP1 = new Player1();
 let alertCount = 0;
-
+let health1 = document.getElementById('health1');
+let health2 = document.getElementById('health2');
 
 // GameLoop
 setInterval(function() {
@@ -20,13 +26,23 @@ setInterval(function() {
 
 //Game actions
 function update(){ 
+
+  health1.value = theP1.health;
+  health2.value = theP2.health;
+
   //P2 shoot
   if(keydown.space) {
     theP2.shoot();
   }
 
 
+  //P1 shoot
+  if(keydown.e) {
+    theP1.shoot();
+  }
 
+
+//P2Move
   if(keydown.left && theP2.x > 0) {
     theP2.x -= theP2.spd;
   }
@@ -52,6 +68,35 @@ theP2.bullets = theP2.bullets.filter(function(bullet) {
 });
 
 
+//P1Move
+if(keydown.a && theP1.x > 0) {
+  theP1.x -= theP1.spd;
+}
+if (keydown.d && theP1.x + theP1.width  < CANVAS_WIDTH) {
+  theP1.x += theP1.spd;
+}
+
+
+if(keydown.w && theP1.y > 0) {
+theP1.y -= theP1.spd;
+}
+if (keydown.s && (theP1.y + theP1.height + 25  ) < CANVAS_HEIGHT) {
+theP1.y += theP1.spd;
+}
+
+
+theP1.bullets.forEach(function(bullet) {
+bullet.update();
+});
+
+theP1.bullets = theP1.bullets.filter(function(bullet) {
+return bullet.active;
+});
+
+
+
+
+
 
 bulletCollisions();
 
@@ -72,8 +117,18 @@ function bulletCollisions() {
         theP1.receiveDamage();
         bullet.active = false;
       }
-  ;
+  
   });
+
+  theP1.bullets.forEach(function(bullet) {
+    if (collides(bullet, theP2)) {
+      theP2.receiveDamage();
+      bullet.active = false;
+    }
+
+});
+
+
 }
 
 
@@ -100,7 +155,18 @@ function bulletCollisions() {
 Player2.prototype.shoot = function () {
   var bulletPosition = theP2.midpoint();
 
-  theP2.bullets.push(Bullet({
+  theP2.bullets.push(Bullet2({
+    speed: 10,
+    x: bulletPosition.x,
+    y: bulletPosition.y
+  }));
+  
+}
+
+Player1.prototype.shoot = function () {
+  var bulletPosition = theP1.midpoint();
+
+  theP1.bullets.push(Bullet({
     speed: 10,
     x: bulletPosition.x,
     y: bulletPosition.y
@@ -109,15 +175,15 @@ Player2.prototype.shoot = function () {
 }
 
 //Bullet Logic 
-
+//P1 Bullets
 function Bullet(I) {
   I.active = true;
 
-  I.xVelocity = 0;
-  I.yVelocity = -I.speed;
-  I.width = 3;
-  I.height = 6;
-  I.color = "#000";
+  I.xVelocity = 50;
+  I.yVelocity = 0;
+  I.width = 10;
+  I.height = 3;
+  I.color = "#87CEEB";
 
   I.inBounds = function() {
     return I.x >= 0 && I.x <= CANVAS_WIDTH &&
@@ -139,6 +205,38 @@ function Bullet(I) {
   return I;
 }
 
+//P2 Bullet
+function Bullet2(J) {
+  J.active = true;
+
+  J.xVelocity = -20;
+  J.yVelocity = 0;
+  J.width = 10;
+  J.height = 3;
+  J.color = "#ff0000";
+
+  J.inBounds = function() {
+    return J.x >= 0 && J.x <= CANVAS_WIDTH &&
+      J.y >= 0 && J.y <= CANVAS_HEIGHT;
+  };
+
+  J.draw = function() {
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.x, this.y, this.width, this.height);
+  };
+
+  J.update = function() {
+    J.x += J.xVelocity;
+    J.y += J.yVelocity;
+
+    J.active = J.active && J.inBounds();
+  };
+
+  return J;
+}
+
+
+
 
 
 
@@ -154,14 +252,19 @@ document.onkeydown = function(event) {
 
 function draw() {
   canvas.clearRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  canvas.fillStyle = "white";
+  canvas.fillStyle = "black";
   canvas.fillRect(0, 0, CANVAS_WIDTH,CANVAS_HEIGHT);
   theP2.drawShip();
   theP2.bullets.forEach(function(bullet) {
     bullet.draw();
   });
   theP1.drawShip();
+  theP1.bullets.forEach(function(bullet) {
+    bullet.draw();
+  });
 }
+
+
 
 
 // Player2
@@ -174,7 +277,7 @@ function Player2(spd, health, atk, name) {
   this.spd = 10;
   this.health = 1000;
   this.atk = 10;
-  // this.name = prompt("Player 2, what will your ship be named?");
+  this.name = prompt("Player 2, what will your ship be named?");
   this.bullets = [];
   this.midpoint = function() {
     return {
@@ -184,15 +287,45 @@ function Player2(spd, health, atk, name) {
   };
 }
 
+
+
+function drawImageRot(img,x,y,width,height,deg){
+
+  
+}
+
+
 Player2.prototype.drawShip = function() {
   var that = this;
   theImage = new Image();
   theImage.src = that.img;
-    canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+    // canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+    //Convert degrees to radian 
+  var rad = 270 * Math.PI / 180;
+
+  //Set the origin to the center of the image
+  canvas.translate(that.x + that.width / 2, that.y + that.height / 2);
+
+  //Rotate the canvas around the origin
+  canvas.rotate(rad);
+
+  //draw the image    
+  canvas.drawImage(theImage, that.width / 2 * (-1),that.height / 2 * (-1),that.width,that.height);
+
+  //reset the canvas  
+  canvas.rotate(rad * ( -1 ) );
+  canvas.translate((that.x + that.width / 2) * (-1), (that.y + that.height / 2) * (-1));
 
 };
 
-
+Player2.prototype.receiveDamage = function() {
+  this.health -= theP1.atk
+  console.log(this.health);
+  if (this.health <=1) {
+    declareVictor();
+  }
+    
+}
 
 //Player1
 
@@ -206,12 +339,12 @@ function Player1(spd, health, atk, name) {
   this.spd = 10;
   this.health = 1000;
   this.atk = 10;
-  // this.name = prompt("Player 2, what will your ship be named?");
+  this.name = prompt("Player 1, what will your ship be named?");
   this.bullets = [];
   this.midpoint = function() {
     return {
-      x: this.x + this.width/2,
-      y: this.y + this.height/2
+      x: (this.x + (this.width/2 + 10)),
+      y: this.y + this.height/2  
     };
   };
 }
@@ -220,7 +353,22 @@ Player1.prototype.drawShip = function() {
   var that = this;
   theImage = new Image();
   theImage.src = that.img;
-    canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+    // canvas.drawImage(theImage, that.x, that.y, that.width, that.height);
+    //Convert degrees to radian 
+  var rad = 90 * Math.PI / 180;
+
+  //Set the origin to the center of the image
+  canvas.translate(that.x + that.width / 2, that.y + that.height / 2);
+
+  //Rotate the canvas around the origin
+  canvas.rotate(rad);
+
+  //draw the image    
+  canvas.drawImage(theImage, that.width / 2 * (-1),that.height / 2 * (-1),that.width,that.height);
+
+  //reset the canvas  
+  canvas.rotate(rad * ( -1 ) );
+  canvas.translate((that.x + that.width / 2) * (-1), (that.y + that.height / 2) * (-1));
 
 };
 
@@ -231,7 +379,7 @@ Player1.prototype.receiveDamage = function() {
   if (this.health <=1) {
     declareVictor();
   }
-  
+
 }
 
 
@@ -254,7 +402,7 @@ declareVictor = function() {
   }
 };
 
-
+}
 // var something = (function() {
 //   var executed = false;
 //   return function() {
@@ -264,3 +412,8 @@ declareVictor = function() {
 //       }
 //   };
 // })();
+
+document.getElementById("start-game-button").onclick = function() {
+  console.log("Start Button Clicked!");
+  Game();
+};
