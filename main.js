@@ -6,6 +6,7 @@ let canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_H
 let canvas = canvasElement.get(0).getContext("2d");
 canvasElement.appendTo('#game-board');
 let FPS = 60;
+
 let theP2 = new Player2();
 
 // Rate of fire
@@ -17,6 +18,7 @@ setInterval(function() {
 }, 200);
 
 let theP1 = new Player1();
+let theP2 = new Player2();
 let alertCount = 0;
 
 
@@ -109,14 +111,28 @@ function bulletCollisions() {
 Player2.prototype.shoot = function () {
   var bulletPosition = theP2.midpoint();
 
-  theP2.bullets.push(Bullet({
-    speed: 15,
+
+  if (theP2.bullets.length <1) {
+  theP2.bullets.push(Bullet2({
+    speed: 10,
     x: bulletPosition.x,
     y: bulletPosition.y
   }));
-  console.log('Pew Pew!')
 }
 
+}
+
+
+
+  if (theP1.bullets.length <1){
+  theP1.bullets.push(Bullet({
+    speed: 10,
+    x: bulletPosition.x,
+    y: bulletPosition.y
+  }));
+}
+  console.log('Pew Pew!')
+}
 
 
 //Bullet Logic 
@@ -125,11 +141,12 @@ Player2.prototype.shoot = function () {
 function Bullet(I) {
   I.active = true;
 
-  I.xVelocity = 0;
-  I.yVelocity = -I.speed;
-  I.width = 3;
-  I.height = 6;
-  I.color = "#000";
+  I.xVelocity = 30;
+  I.yVelocity = 0;
+  I.width = 15;
+  I.height = 8;
+  I.color = "#7FFF00";
+
 
   I.inBounds = function() {
     return I.x >= 0 && I.x <= CANVAS_WIDTH &&
@@ -150,6 +167,40 @@ function Bullet(I) {
 
   return I;
 }
+
+
+//P2 Bullet
+function Bullet2(J) {
+  J.active = true;
+
+  J.xVelocity = -30;
+  J.yVelocity = 0;
+  J.width = 15;
+  J.height = 10;
+  J.color = "#ff0000";
+
+  J.inBounds = function() {
+    return J.x >= 0 && J.x <= CANVAS_WIDTH &&
+      J.y >= 0 && J.y <= CANVAS_HEIGHT;
+  };
+
+  J.draw = function() {
+    canvas.fillStyle = this.color;
+    canvas.fillRect(this.x, this.y, this.width, this.height);
+  };
+
+  J.update = function() {
+    J.x += J.xVelocity;
+    J.y += J.yVelocity;
+
+    J.active = J.active && J.inBounds();
+  };
+
+  return J;
+}
+
+
+
 
 
 
@@ -178,15 +229,17 @@ function draw() {
 
 // Player2
 function Player2(spd, health, atk, name) {
-  this.x = 800;
-  this.y = 100;
+  this.x = CANVAS_WIDTH -100;
+  this.y = 200;
   this.width = 50;
   this.height = 85;
   this.img = "./img/newShip.PNG";
   this.spd = 10;
-  this.health = 1000;
-  this.atk = 10;
-  // this.name = prompt("Player 2, what will your ship be named?");
+
+  this.health = 200;
+  this.atk = 50;
+  this.name = prompt("Player 2, what will your ship be named?");
+
   this.bullets = [];
   this.midpoint = function() {
     return {
@@ -210,15 +263,17 @@ Player2.prototype.drawShip = function() {
 
 
 function Player1(spd, health, atk, name) {
-  this.x = 500;
-  this.y = 100;
+  this.x = 100;
+  this.y = 200;
   this.width = 50;
   this.height = 85;
   this.img = "./img/newShip.PNG";
   this.spd = 10;
-  this.health = 1000;
-  this.atk = 10;
-  // this.name = prompt("Player 2, what will your ship be named?");
+
+  this.health = 200;
+  this.atk = 50;
+  this.name = prompt("Player 1, what will your ship be named?");
+
   this.bullets = [];
   this.midpoint = function() {
     return {
