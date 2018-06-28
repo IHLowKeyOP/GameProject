@@ -37,7 +37,7 @@ function update(){
 
 
   //P1 shoot
-  if(keydown.e) {
+  if(keydown.r) {
     theP1.shoot();
   }
 
