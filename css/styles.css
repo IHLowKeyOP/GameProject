@@ -24,10 +24,7 @@ h1 {
   
 }
 
-.flexlife2 {
-  display: flex;
-  justify-content: space-between;
-}
+
 
 .selection{
   width: 600px;
@@ -38,4 +35,3 @@ h1 {
 /* #titleException{
   justify-content : center;
 } */
-
