@@ -54,8 +54,8 @@ if (rock2.y+rock2.height <=-100) {
     playerCollisions();
     tp();
     tp2();
-    rock.y +=10;
-    rock2.y -=10;
+    rock.y +=rock.spd;
+    rock2.y -=rock.spd;
   
     health1.value = theP1.health;
     health2.value = theP2.health;
@@ -189,7 +189,7 @@ if (rock2.y+rock2.height <=-100) {
   function Asteroid() {
     this.atk = 200;
     this.img = "./img/rock.png";
-    this.spd = 12;
+    this.spd = 5;
     this.width = 150;
     this.height = 150;
     this.x = ((CANVAS_WIDTH / 2) -200);
