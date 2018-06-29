@@ -21,7 +21,7 @@ function Game() {
   let health2 = document.getElementById("health2");
   
   let tp = function rockTeleport(){
-  if (rock.y +rock.height >= CANVAS_HEIGHT){
+  if (rock.y +rock.height >= CANVAS_HEIGHT+100){
     rock.y = -100;
   }}
 
@@ -137,12 +137,18 @@ function Game() {
         theP1.receiveDamage();
         bullet.active = false;
       }
+      if(collides(bullet, rock)) {
+        bullet.active = false; 
+      }
     });
 
     theP1.bullets.forEach(function(bullet) {
       if (collides(bullet, theP2)) {
         theP2.receiveDamage();
         bullet.active = false;
+      }
+      if(collides(bullet, rock)) {
+        bullet.active = false; 
       }
     });
   }
@@ -166,7 +172,7 @@ function Game() {
     this.spd = 12;
     this.width = 150;
     this.height = 150;
-    this.x = CANVAS_WIDTH / 2;
+    this.x = ((CANVAS_WIDTH-this.width) / 2);
     this.y = 200;
   }
   Asteroid.prototype.drawRock = function() {
@@ -221,7 +227,7 @@ function Game() {
 
     I.xVelocity = 30;
     I.yVelocity = 0;
-    I.width = 15;
+    I.width = 40;
     I.height = 8;
     I.color = "#7FFF00";
 
@@ -252,7 +258,7 @@ function Game() {
 
     J.xVelocity = -30;
     J.yVelocity = 0;
-    J.width = 15;
+    J.width = 40;
     J.height = 10;
     J.color = "#ff0000";
 
@@ -322,7 +328,7 @@ function Game() {
     this.midpoint = function() {
       return {
         x: this.x + this.width / 2,
-        y: this.y + this.height / 2
+        y: (this.y -4 + this.height / 2)
       };
     };
   }
@@ -344,6 +350,7 @@ function Game() {
     canvas.rotate(rad);
 
     //draw the image
+    
     canvas.drawImage(
       theImage,
       (that.width / 2) * -1,
@@ -368,6 +375,9 @@ function Game() {
     }
   };
 
+
+
+  
   //Player1
 
   function Player1(spd, health, atk, name) {
@@ -384,7 +394,7 @@ function Game() {
     this.midpoint = function() {
       return {
         x: this.x + (this.width / 2 + 10),
-        y: this.y + this.height / 2
+        y: (this.y -4 + this.height / 2),
       };
     };
   }
@@ -443,15 +453,12 @@ function Game() {
     }
   };
 }
-// var something = (function() {
-//   var executed = false;
-//   return function() {
-//       if (!executed) {
-//           executed = true;
-//           // do something
-//       }
-//   };
-// })();
+
+
+
+
+
+
 
 document.getElementById("start-game-button").onclick = function() {
   console.log("Start Button Clicked!");
