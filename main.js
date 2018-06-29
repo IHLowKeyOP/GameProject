@@ -455,5 +455,6 @@ function Game() {
 
 document.getElementById("start-game-button").onclick = function() {
   console.log("Start Button Clicked!");
+  $('.hideMe').toggle();
   Game();
 };
