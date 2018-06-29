@@ -248,7 +248,7 @@ if (rock2.y+rock2.height <=-100) {
     I.xVelocity = 30;
     I.yVelocity = 0;
     I.width = 40;
-    I.height = 8;
+    I.height = 4;
     I.color = "#7FFF00";
 
     I.inBounds = function() {
@@ -279,7 +279,7 @@ if (rock2.y+rock2.height <=-100) {
     J.xVelocity = -30;
     J.yVelocity = 0;
     J.width = 40;
-    J.height = 10;
+    J.height = 4;
     J.color = "#ff0000";
 
     J.inBounds = function() {
@@ -348,8 +348,8 @@ if (rock2.y+rock2.height <=-100) {
     this.bullets = [];
     this.midpoint = function() {
       return {
-        x: this.x + this.width / 2,
-        y: (this.y -4 + this.height / 2)
+        x: this.x + (this.width / 2),
+        y: (this.y -2 + this.height / 2),
       };
     };
   }
@@ -414,8 +414,8 @@ if (rock2.y+rock2.height <=-100) {
     this.bullets = [];
     this.midpoint = function() {
       return {
-        x: this.x + (this.width / 2 + 10),
-        y: (this.y -4 + this.height / 2),
+        x: this.x + (this.width / 2),
+        y: (this.y -2 + this.height / 2),
       };
     };
   }
@@ -459,6 +459,8 @@ if (rock2.y+rock2.height <=-100) {
     }
   };
 
+
+  
   declareVictor = function() {
     if (theP2.health <= 1 && theP1.health > 0 && alertCount === 0) {
       alert(`${theP2.name} has lost, and ${theP1.name} is victorious!`);
