@@ -32,9 +32,10 @@ function Game() {
 
   // GameLoop
   setInterval(function() {
-    rock.drawRock();
+    
     update();
     draw();
+   
   }, 1000 / FPS);
 
   //Game actions
@@ -161,7 +162,7 @@ function Game() {
   //  ASTERIED CONSTRUCTION FUNTION
   function Asteroid() {
     this.atk = 200;
-    this.img = "./img/rock.png";
+    this.img = "./img/ironhacklogo.png";
     this.spd = 12;
     this.width = 150;
     this.height = 150;
@@ -172,9 +173,8 @@ function Game() {
     var that = this;
     theImage2 = new Image();
     theImage2.src = that.img;
-    theImage2.onload = function() {
       canvas.drawImage(theImage2, that.x, that.y, that.width, that.height);
-    };
+
   };
 
 
@@ -296,6 +296,7 @@ function Game() {
     canvas.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
     theP2.drawShip();
     theP1.drawShip();
+    rock.drawRock();
     theP2.bullets.forEach(function(bullet) {
       bullet.draw();
     });
