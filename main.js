@@ -16,6 +16,12 @@ function Game() {
   let theP1 = new Player1();
   let theP2 = new Player2();
   let rock = new Asteroid();
+  let rock2 = new Asteroid();
+      rock2.x = ((CANVAS_WIDTH + 100) /2);
+      rock2.height = 100;
+      rock2.width = 100;
+      rock2.img = "./img/ironhacklogo.png";
+      
   let alertCount = 0;
   let health1 = document.getElementById("health1");
   let health2 = document.getElementById("health2");
@@ -23,9 +29,14 @@ function Game() {
   let tp = function rockTeleport(){
   if (rock.y +rock.height >= CANVAS_HEIGHT+100){
     rock.y = -100;
-  }}
+  }
+}
 
-
+let tp2 = function rock2Teleport(){
+if (rock2.y+rock2.height <=-100) {
+  rock2.y = CANVAS_HEIGHT+100;
+}
+}
 
 
 
@@ -41,7 +52,9 @@ function Game() {
   //Game actions
   function update() {
     tp();
+    tp2();
     rock.y +=10;
+    rock2.y -=10;
   
     health1.value = theP1.health;
     health2.value = theP2.health;
@@ -126,10 +139,13 @@ function Game() {
     if (collides(theP1, rock)) {
         theP1.receiveDamage();
         theP1.health - theP1.health;
-  
-
-      console.log(theP2.health - theP2.health);
     }
+    if (collides(theP1, rock2)) {
+      theP1.receiveDamage();
+      theP1.health - theP1.health;}
+      if (collides(theP2, rock2)) {
+        theP2.receiveDamage();
+        theP2.health - theP2.health;}
   };
   function bulletCollisions() {
     theP2.bullets.forEach(function(bullet) {
@@ -140,6 +156,9 @@ function Game() {
       if(collides(bullet, rock)) {
         bullet.active = false; 
       }
+      if(collides(bullet, rock2)) {
+        bullet.active = false; 
+      }
     });
 
     theP1.bullets.forEach(function(bullet) {
@@ -148,6 +167,9 @@ function Game() {
         bullet.active = false;
       }
       if(collides(bullet, rock)) {
+        bullet.active = false; 
+      }
+      if(collides(bullet, rock2)) {
         bullet.active = false; 
       }
     });
@@ -168,11 +190,11 @@ function Game() {
   //  ASTERIED CONSTRUCTION FUNTION
   function Asteroid() {
     this.atk = 200;
-    this.img = "./img/ironhacklogo.png";
+    this.img = "./img/rock.png";
     this.spd = 12;
     this.width = 150;
     this.height = 150;
-    this.x = ((CANVAS_WIDTH-this.width) / 2);
+    this.x = ((CANVAS_WIDTH / 2) -200);
     this.y = 200;
   }
   Asteroid.prototype.drawRock = function() {
@@ -303,6 +325,7 @@ function Game() {
     theP2.drawShip();
     theP1.drawShip();
     rock.drawRock();
+    rock2.drawRock();
     theP2.bullets.forEach(function(bullet) {
       bullet.draw();
     });
