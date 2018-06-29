@@ -51,6 +51,7 @@ if (rock2.y+rock2.height <=-100) {
 
   //Game actions
   function update() {
+    playerCollisions();
     tp();
     tp2();
     rock.y +=10;
@@ -176,16 +177,13 @@ if (rock2.y+rock2.height <=-100) {
   }
 
   playerCollisions = function(futurex, futurey) {
-    if (
-      futurex + this.width >= theP1.x &&
-      futurex <= theP1.x + theP1.width &&
-      futurey + this.height >= theP1.y &&
-      futurey <= theP1.y + theP1.height
-    ) {
-      return false;
+    if (collides(theP1, theP2)) {
+     declareVictor();
+      theP1.health  -= theP1.health;
+      theP2.health -= theP2.health;
+    //  
     }
-    return true;
-  };
+  }
 
   //  ASTERIED CONSTRUCTION FUNTION
   function Asteroid() {
